@@ -1,0 +1,194 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Dec 09, 2025 at 12:45 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `barratagt`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `categories`
+-- (TABEL BARU: Untuk menyimpan kategori unik, agar portfolios bisa relasi via FK)
+--
+
+CREATE TABLE `categories` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `categories`
+-- (Data kategori dari services aktif, untuk relasi dengan portfolios)
+--
+
+INSERT INTO `categories` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'DATAEM Systems International', '2025-12-09 00:00:00', '2025-12-09 00:00:00'),
+(2, 'SimActive', '2025-12-09 00:00:00', '2025-12-09 00:00:00'),
+(3, 'AW3D', '2025-12-09 00:00:00', '2025-12-09 00:00:00'),
+(4, 'ALOS-4', '2025-12-09 00:00:00', '2025-12-09 00:00:00'),
+(5, 'KOMPSAT IMAGERY', '2025-12-09 00:00:00', '2025-12-09 00:00:00'),
+(6, 'Lainnya', '2025-12-09 00:00:00', '2025-12-09 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `about_company`
+--
+
+CREATE TABLE `about_company` (
+  `id` int(11) NOT NULL,
+  `company_name` varchar(255) NOT NULL,
+  `tagline` varchar(255) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `vision` text DEFAULT NULL,
+  `mission` text DEFAULT NULL,
+  `about_image` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `about_company` (`id`, `company_name`, `tagline`, `description`, `vision`, `mission`, `about_image`, `created_at`, `updated_at`) VALUES
+(1, 'PT Barrata Global Technology', 'Mitra Terpercaya dalam Industri Pemetaan Indonesia', 'PT Barrata Global Technology telah menjadi bagian penting dalam perkembangan industri pemetaan di Indonesia. Kami mendistribusikan software photogrammetry terkemuka, hardware pemetaan modern, dan data citra satelit berkualitas tinggi untuk mendukung kebutuhan pemetaan profesional di berbagai sektor.', 'Menjadi distributor terdepan dalam menyediakan solusi pemetaan dan teknologi geospasial di Indonesia.', 'Memberikan produk dan layanan berkualitas terbaik dengan dukungan tim ahli berpengalaman, serta terus beradaptasi dengan perkembangan teknologi untuk memenuhi ekspektasi klien.', '', '2025-10-19 21:15:19', '2025-11-21 02:38:32');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin_users`
+--
+
+CREATE TABLE `admin_users` (
+  `id` int(11) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `admin_users` (`id`, `email`, `password`, `created_at`) VALUES
+(1, 'admin@barrata.com', 'admin123', '2025-10-19 21:15:19'),
+(2, 'admin@gmail.com', 'admin123', '2025-11-06 04:09:21'),
+(3, 'test@admin.com', 'test123', '2025-11-21 00:35:46');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `clients`
+--
+
+CREATE TABLE `clients` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `logo` varchar(255) NOT NULL,
+  `sort_order` int(11) DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `clients` (`id`, `name`, `logo`, `sort_order`, `created_at`, `updated_at`) VALUES
+(1, 'TNI Angkatan Udara', '1765236912_001.png', 0, '2025-11-09 02:10:10', '2025-12-08 23:35:12'),
+(2, 'Badan Informasi Geospasial', '1765237286_002.png', 0, '2025-11-09 02:10:10', '2025-12-08 23:41:26'),
+(3, 'BIN (Badan Intelijen Negara Republik Indonesia)', '1765237298_002a.png', 0, '2025-11-09 02:10:10', '2025-12-08 23:41:38'),
+(4, 'ITB', '1765237309_003.png', 0, '2025-11-09 02:10:10', '2025-12-08 23:41:49'),
+(5, 'Surveyor Indonesia', '1765237322_004.png', 0, '2025-11-09 02:10:10', '2025-12-08 23:42:02'),
+(6, 'Penas', '1765237332_005.png', 0, '2025-11-09 02:10:10', '2025-12-08 23:42:12'),
+(7, 'Sucofindo', '1765237345_006.png', 0, '2025-11-09 02:10:10', '2025-12-08 23:42:25'),
+(8, 'Pemerintah Kota Banjarbaru', '1765237356_007.png', 0, '2025-11-09 02:10:10', '2025-12-08 23:42:36'),
+(9, 'Pemda Kota', '1765237368_008.png', 0, '2025-11-09 02:10:10', '2025-12-08 23:42:48'),
+(10, 'ITERA', '1765237378_009.png', 0, '2025-11-09 02:10:10', '2025-12-08 23:42:58'),
+(11, 'Institut Teknologi Sepuluh November', '1765237387_010.png', 0, '2025-11-09 02:10:10', '2025-12-08 23:43:07'),
+(12, 'Kementerian Lingkungan Hidup dan Kehutanan', '1765237399_011.png', 0, '2025-11-09 02:10:10', '2025-12-08 23:43:19');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contact_info`
+--
+
+CREATE TABLE `contact_info` (
+  `id` int(11) NOT NULL,
+  `address` text DEFAULT NULL,
+  `operating_hours` text DEFAULT NULL,
+  `phone` varchar(50) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `whatsapp` varchar(50) DEFAULT NULL,
+  `website` varchar(255) DEFAULT NULL,
+  `instagram` varchar(100) DEFAULT NULL,
+  `linkedin` varchar(100) DEFAULT NULL,
+  `facebook` varchar(100) DEFAULT NULL,
+  `twitter` varchar(100) DEFAULT NULL,
+  `maps_embed_url` text DEFAULT NULL,
+  `latitude` varchar(50) DEFAULT NULL,
+  `longitude` varchar(50) DEFAULT NULL,
+  `location_description` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `contact_info` (`id`, `address`, `operating_hours`, `phone`, `email`, `whatsapp`, `website`, `instagram`, `linkedin`, `facebook`, `twitter`, `maps_embed_url`, `latitude`, `longitude`, `location_description`, `created_at`, `updated_at`) VALUES
+(1, 'Jl. Arcamanik Endah No.85A, Cisaranten Kulon, Kec. Arcamanik, Kota Bandung, Jawa Barat 40293', 'Senin-Jumat: 08:00 - 17:00 WIB\r\nSabtu: 08:00 - 12:00 WIB\r\nMinggu: Tutup', '(022) 20521270', 'info@barrataglobal.tech', '+62 812 3456 7890', 'https://barrataglobal.tech', '@barrataglobal', 'barrata-technologies', 'https://web.facebook.com/barrataglobaltechnology/', '@Barrata_Global', 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1m12!1m3!1d3960.766250706146!2d107.67217807499654!3d-6.918524593081061!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68dd75c0000001%3A0x3eabb88b5648a569!2sPT.%20Barrata%20Global%20Technology!5e0!3m2!1sid!2sid!4v1762442035539!5m2!1sid!2sid', '', '', 'Kantor kami berlokasi strategis di kawasan Arcamanik, Bandung.', '2025-10-19 21:15:19', '2025-11-06 08:37:10');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contact_requests`
+--
+
+CREATE TABLE `contact_requests` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `whatsapp_number` varchar(50) NOT NULL,
+  `request_type` varchar(100) NOT NULL,
+  `priority` enum('High','Medium','Low') DEFAULT 'Medium',
+  `subject` varchar(255) DEFAULT NULL,
+  `message` text NOT NULL,
+  `status` enum('baru','Pending','In Progress','Resolved') DEFAULT 'baru',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `contact_requests` (`id`, `name`, `email`, `whatsapp_number`, `request_type`, `priority`, `subject`, `message`, `status`, `created_at`, `updated_at`) VALUES
+(4, 'jaya', 'jaya@gmail.com', '+6281463819262', 'Survey', 'Medium', 'Survey', 'persyaratan survey', 'In Progress', '2025-12-08 15:15:00', '2025-12-08 15:16:00'),
+(5, 'alya', 'alyakamilia13@gmail.com', '+6281463819262', 'Pelatihan Fotogrametri - Remote Sensing', 'Medium', 'Pelatihan', 'Detail Pelatihan', 'Pending', '2025-12-08 15:15:46', '2025-12-08 15:15:46');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `faqs`
+--
+
+CREATE TABLE `faqs` (
+  `id` int(11) NOT NULL,
+  `question` varchar(500) NOT NULL,
+  `answer` text NOT NULL,
+  `is_active` tinyint(1) DEFAULT 1,
+  `sort_order` int(11) DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `faqs` (`id`, `question`, `answer`, `is_active`, `sort_order`, `created_at`, `updated_at`) VALUES
+(1, 'Apa itu PT Barrata Global Technology?', 'PT Barrata Global Technology adalah perusahaan distributor software photogrammetry, hardware pemetaan, dan data citra satelit yang telah berkontribusi besar dalam perubahan positif industri pemetaan Indonesia. Kami melayani berbagai klien mulai dari institusi pendidikan, swasta, hingga pemerintahan.', 1, 1, '2025-11-21 01:57:41', '2025-11-21 01:57:41'),
+(2, 'Software Photogrammetry apa saja yang didistribusikan?', 'Kami mendistribusikan software photogrammetry terkemuka seperti Summit Evolution dan Correlator 3D. Summit Evolution menyediakan tools untuk menangkap informasi 3D dari data stereo dengan interface CAD dan GIS. Correlator 3D dari Simactive adalah software pertama yang menggunakan GPU-Powered AT dan DSM engines di industri.', 1, 2, '2025-11-21 01:57:41', '2025-11-21 01:57:41'),
+(3, 'Apa itu Summit Evolution?', 'Summit Evolution adalah software yang menyediakan seperangkat tools untuk menemukan dan menangkap informasi 3D dari data stereo. Software ini mencakup interface CAD dan GIS, 3D stereo vector superimposition, automated feature editing, contour generation, dan banyak tools lainnya. Fitur dapat digitalisasi langsung ke AutoCAD, MicroStation, ArcGIS, atau Global Mapper melalui interface Capture.', 1, 3, '2025-11-21 01:57:41', '2025-11-21 01:57:41'),
+(4, 'Apa keunggulan Correlator 3D?', 'Correlator 3D dari Simactive merupakan software photogrammetry yang terus berinovasi sejak 2003. Keunggulan utamanya adalah sebagai software pertama di industri yang menggunakan GPU-Powered AT (Aerial Triangulation) dan DSM (Digital Surface Model) engines, yang memberikan performa pemrosesan data yang sangat cepat dan akurat.', 1, 4, '2025-11-21 01:57:41', '2025-11-21 01:57:41'),
+(5, 'Data satelit imagery apa saja yang tersedia?', 'Kami menyediakan berbagai data satelit imagery berkualitas tinggi seperti AW3D (peta 3D global dengan resolusi 5 meter), ALOS 2 PALSAR-2 (Synthetic Aperture Radar), dan KOMPSAT (Korean Multipurpose Satellite) untuk keperluan multipurpose dan SAR.', 1, 5, '2025-11-21 01:57:41', '2025-11-21 01:57:41'),
+(6, 'Apa itu AW3D?', 'AW3D adalah peta 3D pertama dan paling presisi di dunia yang mencakup seluruh permukaan daratan global dengan resolusi 5 meter. Data ini sangat berguna untuk berbagai aplikasi pemetaan dan analisis topografi.', 1, 6, '2025-11-21 01:57:41', '2025-11-21 01:57:41'),
+(
